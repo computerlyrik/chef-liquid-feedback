@@ -15,14 +15,14 @@ openssl
 
 # Attributes
 
-**Set up instance attributes**
+**Instance related attributes**
 ```ruby
 node['lq']['organisation'] = "Our Organisation"
 node['lq']['area'] = "Default Area"
 node['lq']['member_ttl'] = "1 year"
 ```
 
-**Customize software version attributes**
+**Software related attributes**
 ```ruby
 node['lq']['lq_core'] = "v2.1.0"
 node['lq']['webmcp'] = "v1.2.5"
