@@ -42,3 +42,6 @@ node['lq']['admin_invitecode']
 # Ideas/Todo
 - Setup Postfix or exim (or email)
 - Send event notifications
+
+# Contact
+see metadata.rb
