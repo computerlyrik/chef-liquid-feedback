@@ -35,7 +35,7 @@ config.use_terms_checkboxes = {
 
 -- Absolute base url of application
 -- ------------------------------------------------------------------------
-config.absolute_base_url = "http://<%=node['hostname']%>.<%=node['domain']%>/"
+config.absolute_base_url = "http://<%=node['hostname']%>.<%=node['domain']%>/lf"
 
 
 -- Connection information for the LiquidFeedback database
@@ -96,7 +96,7 @@ config.public_access = "none"
 -- Sender of all automatic mails, defaults to system defaults
 -- ------------------------------------------------------------------------
 -- config.mail_envelope_from = "liquidfeedback@example.com"
--- config.mail_from = { name = "LiquidFeedback", address = "liquidfeedback@example.com" }
+-- config.mail_from = { name = "LiquidFeedback", address = "<%= node['lf']['email_from']" }
 -- config.mail_reply_to = { name = "Support", address = "support@example.com" }
 
 -- Configuration of password hashing algorithm (defaults to "crypt_sha512")
