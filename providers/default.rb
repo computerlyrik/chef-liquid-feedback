@@ -126,7 +126,7 @@ action :create do
 
 
 
-  directory "/root/install"
+
 
   ######## Install WebMCP: 
   ######### Checkout core code
@@ -152,6 +152,7 @@ action :create do
   #  subscribes :run, resources(:mercurial => "/root/install/webmcp")
 
   ######## Install RocketWiki LqFb-Edition: 
+  directory "/root/install"
   package "ghc"
   package "libghc6-parsec3-dev"
   #if debian
@@ -188,7 +189,7 @@ action :create do
     command "/usr/bin/make"
     cwd "#{lf_dir}/liquid_feedback_frontend/locale"
     environment ({
-      'PATH' => '#{lf_dir}/rocketwiki-lqfb:$PATH',
+      'PATH' => "#{lf_dir}/rocketwiki-lqfb:$PATH",
       'LC_ALL' => 'de_DE.UTF-8',
       'LANG' => 'de_DE.UTF-8'})
   end
