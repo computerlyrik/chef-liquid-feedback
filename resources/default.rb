@@ -26,6 +26,7 @@ attribute :organisation, :kind_of => String, :name_attribute => true
 attribute :area, :kind_of => String, :default => "Default Area"
 attribute :member_ttl, :kind_of => String, :default => "1 year"
 attribute :contingent ,:kind_of => Hash
+attribute :public_access ,:kind_of => String, :default => "none"
 
 attribute :email_from, :kind_of => String, :required => true
 attribute :email_to, :kind_of => String, :required => true
