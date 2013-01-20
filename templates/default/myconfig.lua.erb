@@ -35,19 +35,19 @@ config.use_terms_checkboxes = {
 
 -- Absolute base url of application
 -- ------------------------------------------------------------------------
-config.absolute_base_url = "http://<%=node['hostname']%>.<%=node['domain']%>/lf"
+config.absolute_base_url = "http://<%=node['name']%>/lf"
 
 
 -- Connection information for the LiquidFeedback database
 -- ------------------------------------------------------------------------
-config.database = { user='liquid_feedback', password='<%=node['lq']['db']['password']%>', engine='postgresql', dbname='liquid_feedback' }
+config.database = { user='<%= @db_user %>', password='<%=node['lf']['db']['password']%>', engine='postgresql', dbname='<%= @db_name %>' }
 
 
 -- Location of the rocketwiki binaries
 -- ------------------------------------------------------------------------
 config.formatting_engine_executeables = {
-  rocketwiki= "/opt/rocketwiki-lqfb/rocketwiki-lqfb",
-  compat = "/opt/rocketwiki-lqfb/rocketwiki-lqfb-compat"
+  rocketwiki= "<%= @lf_dir %>/rocketwiki-lqfb/rocketwiki-lqfb",
+  compat = "<%= @lf_dir %>/rocketwiki-lqfb/rocketwiki-lqfb-compat"
 }
 
 
@@ -67,7 +67,7 @@ config.formatting_engine_executeables = {
 -- "everything"
 --     -> Show everything a member can see, including profile pages
 -- ------------------------------------------------------------------------
-config.public_access = "none"
+config.public_access = "<%= node['lf']['public_access'] %>"
 
 
 

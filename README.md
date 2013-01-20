@@ -13,31 +13,49 @@ mercurial
 openssl
 ```
 
-# Attributes
+# Resources
 
 **Instance related attributes**
 ```ruby
-node['lq']['organisation'] = "Our Organisation"
-node['lq']['area'] = "Default Area"
-node['lq']['member_ttl'] = "1 year"
-```
+liquid_feedback "OurOrganization" do
+    email_from "lqfb@example.com"
+    area "The Internet"
+    action :create
+    member_ttl '1 year'
 
-**Software related attributes**
-```ruby
-node['lq']['lq_core'] = "v2.1.0"
-node['lq']['webmcp'] = "v1.2.5"
-node['lq']['lq_frontend'] = "v2.1.2"
+    # software related attributes
+    core_version 'v2.1.0'
+    webmcp_version 'v2.1.0'
+    frontend_version 'v2.1.2'
+end
 ```
 
 # Usage
-Set up the attributes you need.
-Just run recipe.
 
+Set up a liquid_feedback resource in your recipe and run it.
 Your admin invitekey will be set as node attribute 
+
 ```ruby 
-node['lq']['admin_invitecode']
+node['lf']['admin_invitecode']
 ```
 
+# Notes
+
+If you use chef-solo, you must set lf db password and postgresql password in
+node json directly:
+
+```json
+    "lf": {
+        "db": {
+            "password": "passwordForLQInstanceUser"
+        }
+    },
+    "postgresql": {
+        "password": {
+            "postgres": "passwordForConncetingToPG"
+        }
+    }
+```
 
 # Ideas/Todo
 - Setup Postfix or exim (or email)
