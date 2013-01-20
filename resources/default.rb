@@ -35,4 +35,4 @@ attribute :core_repo, :kind_of => String, :default => "http://www.public-softwar
 attribute :core_version, :kind_of => String, :default => "v2.1.0"
 attribute :frontend_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_frontend"
 attribute :frontend_version, :kind_of => String, :default => "v2.1.3"
-attribute :webcmp_version, :kind_of => String, :default =>  "v1.2.5"
+attribute :webmcp_version, :kind_of => String, :default =>  "v1.2.5"

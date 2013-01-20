@@ -132,8 +132,8 @@ action :create do
   ######### Checkout core code
   mercurial "#{lf_dir}/webmcp-install" do
     repository "http://www.public-software-group.org/mercurial/webmcp"
-    if new_resource.webcmp_version
-      reference new_resource.webcmp_version
+    if new_resource.webmcp_version
+      reference new_resource.webmcp_version
     end
     action :sync
   end
