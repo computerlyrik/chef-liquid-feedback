@@ -204,6 +204,9 @@ action :create do
 
   template "#{lf_dir}/liquid_feedback_frontend/config/myconfig.lua" do
     mode 0644
+    variables ({:db_user => db_user,
+                :lf_dir  => lf_dir,
+                :db_name => db_name})
   end
 
 
