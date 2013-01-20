@@ -188,9 +188,12 @@ action :create do
     command "/usr/bin/make"
     cwd "#{lf_dir}/liquid_feedback_frontend/locale"
     environment ({
-      'PATH' => '#{lf_dir}/rocketwiki-lqfb:$PATH',
-      'LC_ALL' => 'de_DE.UTF-8',
-      'LANG' => 'de_DE.UTF-8'})
+      'PATH' => "#{lf_dir}/rocketwiki-lqfb:$PATH",
+      'PWD' => "#{lf_dir}/liquid_feedback_frontend/locale",
+      'HOME' => "/root",
+      'LC_ALL' => 'en_US.UTF-8',
+      'LANG' => 'en_US.UTF-8'
+    })
   end
 
 
