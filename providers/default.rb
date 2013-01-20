@@ -30,7 +30,7 @@ action :create do
 
   db_user = "lf_#{@new_resource.organisation}"
   db_name = db_user
-  db_password = secure_password
+  db_password = node['lf']['db']['password'] || secure_password
   lf_dir = "#{node['lf']['basedir']}/#{@new_resource.organisation}"
   directory lf_dir
   
@@ -88,7 +88,7 @@ action :create do
     subscribes :run, resources(:postgresql_database => db_name), :immediately
   end
   
-  invite_code = secure_password
+  invite_code = node['lf']['admin_invitecode'] || secure_password
   template "#{lf_dir}/invitecode" do
     action :nothing
     subscribes :create, resources(:execute => 'db_import')
@@ -214,7 +214,25 @@ action :create do
   execute 'make CC="-D GETPIC_DEFAULT_AVATAR=#{lf_dir}/liquid_feedback_frontend/static/avatar.jpg"' do
     cwd "#{lf_dir}/liquid_feedback_frontend/fastpath"
   end
-  
+  ######## Setup Update service
+  execute 'make lf_update' do
+    cwd "#{lf_dir}/liquid_feedback_core"
+    command "make lf_update"
+  end
+
+  template "#{lf_dir}/liquid_feedback_core/lf_updated" do
+    variables ({:db_user => db_user,
+                :lf_dir  => lf_dir,
+                :db_name => db_name})
+    mode 0755
+  end
+
+  template "/etc/init.d/lf_updated_#{new_resource.organisation}" do
+    source "lf_updated.init.erb"
+    variables ({:lf_dir  => lf_dir })
+    mode 0755
+  end
+
   package "sendmail"
 
   ######## Configure lighty
@@ -228,15 +246,6 @@ action :create do
   link "/etc/lighttpd/conf-enabled/60-liquidfeedback-#{@new_resource.organisation}.conf" do 
     to "/etc/lighttpd/conf-available/60-liquidfeedback-#{new_resource.organisation}.conf"
     notifies :restart, resources(:service => "lighttpd")
-  end
-
-
-  ######## Setup Update service
-  template "#{lf_dir}/liquid_feedback_core/lf_updated"
-
-  template "/etc/init.d/lf_updated_#{@new_resource.organisation}" do
-    source "lf_updated.init.erb"
-    mode 0755
   end
 
   #TODO sending event notifications
