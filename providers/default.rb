@@ -233,8 +233,6 @@ action :create do
     mode 0755
   end
 
-  package "sendmail"
-
   ######## Configure lighty
   package "lighttpd"
   service "lighttpd"
