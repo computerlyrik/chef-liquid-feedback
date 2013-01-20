@@ -35,12 +35,15 @@ config.use_terms_checkboxes = {
 
 -- Absolute base url of application
 -- ------------------------------------------------------------------------
+<% if node['domain'] %>
 config.absolute_base_url = "http://<%=node['hostname']%>.<%=node['domain']%>/lf"
-
+<% else %>
+config.absolute_base_url = "http://<%=node['hostname']%>/lf"
+<% end %>
 
 -- Connection information for the LiquidFeedback database
 -- ------------------------------------------------------------------------
-config.database = { user='liquid_feedback', password='<%=node['lq']['db']['password']%>', engine='postgresql', dbname='liquid_feedback' }
+config.database = { user='<%=@db_user%>', password='<%=@db_password%>', engine='postgresql', dbname='<%=@db_name%>' }
 
 
 -- Location of the rocketwiki binaries
@@ -95,9 +98,9 @@ config.public_access = "none"
 
 -- Sender of all automatic mails, defaults to system defaults
 -- ------------------------------------------------------------------------
--- config.mail_envelope_from = "liquidfeedback@example.com"
--- config.mail_from = { name = "LiquidFeedback", address = "<%= node['lf']['email_from']" }
--- config.mail_reply_to = { name = "Support", address = "support@example.com" }
+config.mail_envelope_from = "<%= node['lf']['email_from']%>"
+config.mail_from = { name = "LiquidFeedback", address = "<%= node['lf']['email_from']%>" }
+config.mail_reply_to = { name = "Support", address = "<%= node['lf']['email_from']%>" }
 
 -- Configuration of password hashing algorithm (defaults to "crypt_sha512")
 -- ------------------------------------------------------------------------
