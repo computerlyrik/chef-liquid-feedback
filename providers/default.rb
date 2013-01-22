@@ -244,18 +244,22 @@ action :create do
   template "/etc/lighttpd/conf-available/60-liquidfeedback-modules.conf" do
     notifies :restart, resources(:service => "lighttpd")
   end
+  link "/etc/lighttpd/conf-enabled/60-liquidfeedback-modules.conf" do 
+    to "/etc/lighttpd/conf-available/60-liquidfeedback-modules.conf"
+    notifies :restart, resources(:service => "lighttpd")
+  end
   
-  template "/etc/lighttpd/conf-available/60-liquidfeedback-#{@new_resource.organisation}.conf" do
+  template "/etc/lighttpd/conf-available/61-liquidfeedback-#{@new_resource.organisation}.conf" do
     variables ({
       :lf_dir  => lf_dir,
       :organisation => new_resource.organisation})
-    source "60-liquidfeedback.conf.erb"
+    source "61-liquidfeedback.conf.erb"
     mode 0644
     notifies :restart, resources(:service => "lighttpd")
   end
 
-  link "/etc/lighttpd/conf-enabled/60-liquidfeedback-#{@new_resource.organisation}.conf" do 
-    to "/etc/lighttpd/conf-available/60-liquidfeedback-#{new_resource.organisation}.conf"
+  link "/etc/lighttpd/conf-enabled/61-liquidfeedback-#{@new_resource.organisation}.conf" do 
+    to "/etc/lighttpd/conf-available/61-liquidfeedback-#{new_resource.organisation}.conf"
     notifies :restart, resources(:service => "lighttpd")
   end
 
@@ -274,8 +278,8 @@ end
 
 action :disable do
   service "lighttpd"
-  template "/etc/lighttpd/conf-enabled/60-liquidfeedback-#{@new_resource.organisation}.conf" do
-    source "60-liquidfeedback.conf.erb"
+  template "/etc/lighttpd/conf-enabled/61-liquidfeedback-#{@new_resource.organisation}.conf" do
+    source "61-liquidfeedback.conf.erb"
     action :delete
     notifies :restart, resources(:service => "lighttpd")
   end
