@@ -206,7 +206,8 @@ action :create do
                 :db_name => db_name,
                 :db_password => db_password,
                 :lf_dir  => lf_dir,
-                :email => new_resoucre.email})
+                :email => new_resource.email,
+                :public_access => new_resource.public_access})
 
   end
 
