@@ -1,17 +1,17 @@
-server.modules += ("mod_cgi", "mod_rewrite", "mod_redirect", "mod_setenv")
+server.modules += ("mod_cgi", "mod_rewrite", "mod_setenv")
 
 # Enable CGI-Execution of *.lua files through lua binary
 cgi.assign += ( ".lua" => "/usr/bin/lua5.1" )
 
-alias.url += ( "/lf/fastpath/" => "/opt/liquid_feedback_frontend/fastpath/",
-               "/lf/static"    => "/opt/liquid_feedback_frontend/static",
-               "/lf"           => "/opt/webmcp/cgi-bin" )
+alias.url += ( "/lf/fastpath/" => "<%= @lf_dir %>/liquid_feedback_frontend/fastpath/",
+               "/lf/static"    => "<%= @lf_dir %>/liquid_feedback_frontend/static",
+               "/lf"           => "<%= @lf_dir %>/webmcp/cgi-bin" )
 
 # Configure environment for demo application
 $HTTP["url"] =~ "^/lf" {
   setenv.add-environment += (
     "LANG" => "en_US.UTF-8",
-    "WEBMCP_APP_BASEPATH" => "/opt/liquid_feedback_frontend/",
+    "WEBMCP_APP_BASEPATH" => "<%= @lf_dir %>/liquid_feedback_frontend/",
     "WEBMCP_CONFIG_NAME"  => "myconfig")
 }
 
