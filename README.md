@@ -36,6 +36,35 @@ end
 Set up one or multiple liquid_feedback resource in your recipe and run it.
 Your admin invitekey will be written to a template
 
+### miminal example script
+```ruby
+::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
+
+node.set_unless['lf']['db_password'] = secure_password
+node.set['lf']['db_user'] = "liquid_feedback"
+
+liquid_feedback "org1" do
+
+    email "org1.example.com"
+    locale "de_DE.UTF-8"
+
+    db_user node['lf']['db_user']
+    db_password node['lf']['db_password']
+
+    action [:create, :start]
+end
+
+liquid_feedback "org2" do
+
+    email "org2@example.com"
+    locale "en_US.UTF-8"
+
+    db_user node['lf']['db_user']
+    db_password node['lf']['db_password']
+
+    action [:create, :start]
+end
+```
 
 
 ## Via Recipe (single-instance)
