@@ -24,14 +24,22 @@ default_action :create
  
 attribute :organisation, :kind_of => String, :name_attribute => true
 attribute :area, :kind_of => String, :default => "Default Area"
+
+attribute :email, :kind_of => String, :required => true
+attribute :locale, :kind_of => String, :default =>  "en_US.UTF-8"
+
 attribute :member_ttl, :kind_of => String, :default => "1 year"
 attribute :contingent ,:kind_of => Hash
 attribute :public_access ,:kind_of => String, :default => "none"
 
-attribute :email, :kind_of => String, :required => true
-
+attribute :basedir, :kind_of => String, :default =>  "/opt"
 attribute :core_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_core"
 attribute :core_version, :kind_of => String, :default => "v2.1.0"
 attribute :frontend_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_frontend"
 attribute :frontend_version, :kind_of => String, :default => "v2.1.3"
 attribute :webmcp_version, :kind_of => String, :default =>  "v1.2.5"
+
+attribute :db_user, :kind_of => String
+attribute :db_name, :kind_of => String
+attribute :db_password, :kind_of => String
+

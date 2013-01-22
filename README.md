@@ -1,8 +1,6 @@
 # Description
 beta
 
-ATTENTION node['lf']['basedir'] and according resource attribute now defaults to absolute localtion of this instance (not concatinated with organisation anymore)
-
 Sets up a liquid democracy tool: LiquidFeedback  (http://liquidfeedback.org)
 
 Based on Lua and Postgresql
