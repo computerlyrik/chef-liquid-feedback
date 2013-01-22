@@ -11,7 +11,7 @@ fi
 echo "${PID}" > "${PIDFILE}"
 
 while true; do
-  su - www-data -c 'env PGUSER=<%= @db_user %> PGPASSWORD=<%= node['lf']['db']['password'] %> nice <%= @lf_dir %>/liquid_feedback_core/lf_update dbname=<%= @db_name %> 2>&1 | logger -t "lf_updated"'
+  su - www-data -c 'env PGUSER=<%= @db_user %> PGPASSWORD=<%= @db_password %> nice <%= @lf_dir %>/liquid_feedback_core/lf_update dbname=<%= @db_name %> 2>&1 | logger -t "lf_updated"'
   sleep 5
 done
 

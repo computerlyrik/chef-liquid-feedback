@@ -23,15 +23,15 @@ include Chef::Mixin::LanguageIncludeRecipe
 
 action :create do
   include_recipe "mercurial"
-  directory node['lf']['basedir']
+  
   #########################################################################
   ########################### BACKEND ####################################
   #########################################################################
 
-  db_user = "lf_#{@new_resource.organisation}"
+  db_user = "lf_#{new_resource.organisation}"
   db_name = db_user
-  db_password = node['lf']['db']['password'] || secure_password
-  lf_dir = "#{node['lf']['basedir']}/#{@new_resource.organisation}"
+  db_password = new_resoucre.password || secure_password
+  lf_dir = new_resource.basedir
   directory lf_dir
   
   ######### Checkout core code
@@ -209,8 +209,11 @@ action :create do
   template "#{lf_dir}/liquid_feedback_frontend/config/myconfig.lua" do
     mode 0644
     variables ({:db_user => db_user,
+                :db_name => db_name,
+                :db_password => db_password,
                 :lf_dir  => lf_dir,
-                :db_name => db_name})
+                :email => new_resoucre.email})
+
   end
 
 

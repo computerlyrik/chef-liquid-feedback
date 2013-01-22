@@ -17,6 +17,22 @@
 # limitations under the License.
 #
 
+
+liquid_feedback "OurOrganization" do
+    email_from "lqfb@example.com"
+    area "The Internet"
+    action :create
+    member_ttl '1 year'
+
+    # software related attributes
+
+    basedir "#{node['lf']['basedir']}/#{@new_resource.organisation}"
+    core_version 'v2.1.0'
+    webmcp_version 'v2.1.0'
+    frontend_version 'v2.1.2'
+end
+
+
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
 
 include_recipe "mercurial"

@@ -28,8 +28,7 @@ attribute :member_ttl, :kind_of => String, :default => "1 year"
 attribute :contingent ,:kind_of => Hash
 attribute :public_access ,:kind_of => String, :default => "none"
 
-attribute :email_from, :kind_of => String, :required => true
-attribute :email_to, :kind_of => String, :required => true
+attribute :email, :kind_of => String, :required => true
 
 attribute :core_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_core"
 attribute :core_version, :kind_of => String, :default => "v2.1.0"
