@@ -28,10 +28,11 @@ action :create do
   ########################### BACKEND ####################################
   #########################################################################
 
-  db_user = "lf_#{new_resource.organisation}"
-  db_name = db_user
-  db_password = new_resoucre.password || secure_password
-  lf_dir = new_resource.basedir
+
+  db_user = @new_resource.db_user || "lf_#{new_resource.organisation}"
+  db_name = @new_resource.db_name || "lf_#{new_resource.organisation}"
+  db_password = @new_resource.db_password || secure_password
+  lf_dir = "#{@new_resource.basedir}/#{@new_resource.organisation}"
   directory lf_dir
   
   ######### Checkout core code
@@ -205,6 +206,7 @@ action :create do
     variables ({:db_user => db_user,
                 :db_name => db_name,
                 :db_password => db_password,
+                :organisation  => new_resource.organisation,
                 :lf_dir  => lf_dir,
                 :email => new_resource.email,
                 :public_access => new_resource.public_access})
@@ -238,8 +240,15 @@ action :create do
   ######## Configure lighty
   package "lighttpd"
   service "lighttpd"
+  
+  template "/etc/lighttpd/conf-available/60-liquidfeedback-modules.conf" do
+    notifies :restart, resources(:service => "lighttpd")
+  end
+  
   template "/etc/lighttpd/conf-available/60-liquidfeedback-#{@new_resource.organisation}.conf" do
-    variables ({:lf_dir  => lf_dir })
+    variables ({
+      :lf_dir  => lf_dir,
+      :organisation => new_resource.organisation})
     source "60-liquidfeedback.conf.erb"
     mode 0644
     notifies :restart, resources(:service => "lighttpd")
