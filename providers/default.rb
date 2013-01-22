@@ -87,7 +87,7 @@ action :create do
     subscribes :run, resources(:postgresql_database => db_name), :immediately
   end
   
-  invite_code = node['lf']['admin_invitecode'] || secure_password
+  invite_code = secure_password
   template "#{lf_dir}/invitecode" do
     action :nothing
     subscribes :create, resources(:execute => 'db_import')
