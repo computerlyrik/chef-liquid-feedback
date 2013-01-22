@@ -32,9 +32,18 @@ end
 
 # Usage
 
-Set up a liquid_feedback resource in your recipe and run it.
-Your admin invitekey will be set as node attribute 
+## Via Resource (multi-instance)
+Set up one or multiple liquid_feedback resource in your recipe and run it.
+Your admin invitekey will be written to a template
 
+
+
+## Via Recipe (single-instance)
+
+Set up node attributes
+Include recipe.
+
+Your admin invitekey will be stored as node attribute
 ```ruby 
 node['lf']['admin_invitecode']
 ```
@@ -56,6 +65,10 @@ node json directly:
         }
     }
 ```
+
+KNOWN BUGS with using resources:
+- Lighttpd currently supports only single-instance (web path)
+- Postgresql supports only one db_user and db_password (pg_hba needs to be setup for all users, circumvent with setting db_user and db_password same on all your resources)
 
 # Ideas/Todo
 - Setup Postfix or exim (or email)
