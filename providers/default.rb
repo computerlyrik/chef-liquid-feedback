@@ -49,7 +49,7 @@ action :create do
   #TODO SPLIT HBA FILES TO FLEXIBLE CONFIGURE
   node.set['postgresql']['pg_hba'] = [
     {:type => 'local', :db => 'all', :user => 'postgres', :addr => nil, :method => 'ident'},
-    {:type => 'local', :db => db_user, :user => db_user, :addr => nil, :method => 'password'},
+    {:type => 'local', :db => db_name, :user => db_user, :addr => nil, :method => 'password'},
     {:type => 'host', :db => 'all', :user => 'all', :addr => '127.0.0.1/32', :method => 'md5'},
     {:type => 'host', :db => 'all', :user => 'all', :addr => '::1/128', :method => 'md5'}
   ]
