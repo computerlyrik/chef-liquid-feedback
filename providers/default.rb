@@ -37,9 +37,7 @@ action :create do
   ######### Checkout core code
   mercurial "#{lf_dir}/liquid_feedback_core" do
     repository new_resource.core_repo
-    if new_resource.core_version
-      reference new_resource.core_version
-    end
+    reference new_resource.core_version
     action :sync
   end
 
@@ -132,9 +130,7 @@ action :create do
   ######### Checkout core code
   mercurial "#{lf_dir}/webmcp-install" do
     repository "http://www.public-software-group.org/mercurial/webmcp"
-    if new_resource.webmcp_version
-      reference new_resource.webmcp_version
-    end
+    reference new_resource.webmcp_version
     action :sync
   end
 
@@ -179,9 +175,7 @@ action :create do
   ######### Checkout Frontend code
   mercurial "#{lf_dir}/liquid_feedback_frontend" do
     repository new_resource.frontend_repo
-    if new_resource.frontend_version
-      reference new_resource.frontend_version
-    end
+    reference new_resource.frontend_version
     action :sync
   end
 
