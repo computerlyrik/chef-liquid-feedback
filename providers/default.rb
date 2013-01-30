@@ -67,6 +67,7 @@ action :create do
   postgresql_database db_name do
     connection postgresql_connection_info
     owner db_user
+    encoding "UTF8"
     action :create
   end
 
