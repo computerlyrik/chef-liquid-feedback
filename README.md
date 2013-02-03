@@ -103,5 +103,8 @@ KNOWN BUGS with using resources:
 - Setup Postfix or exim (or email)
 - Send event notifications
 
+- Set up Unix users for postges access
+- Set up lighttp to run lua scripts as unix users (and find out which access rights they need)
+
 # Contact
 see metadata.rb
