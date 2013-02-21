@@ -230,6 +230,7 @@ end
 
   template "#{lf_dir}/liquid_feedback_core/lf_updated" do
     variables ({:db_user => db_user,
+                :db_password => db_password,
                 :lf_dir  => lf_dir,
                 :db_name => db_name})
     mode 0755
