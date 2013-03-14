@@ -20,6 +20,10 @@
 
 node.set_unless['lf']['db_password'] = secure_password
 
+if node['lf']['sendmail']
+  package 'sendmail'
+end
+
 liquid_feedback node['lf']['organisation'] do
     area node['lf']['area']
 

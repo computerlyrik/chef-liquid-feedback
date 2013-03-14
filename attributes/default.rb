@@ -26,3 +26,6 @@ default['lf']['webcmp_version'] = "v1.2.5"
 default['lf']['db_user']    = nil
 default['lf']['db_name']    = nil
 default['lf']['db_password']= nil
+
+#install default mailing service
+default['lf']['sendmail'] = false
