@@ -29,3 +29,5 @@ default['lf']['db_password']= nil
 
 #install default mailing service
 default['lf']['sendmail'] = false
+#if lighttp should create aliases for different LqFb instances
+default['lf']['lighttp_alias'] = false

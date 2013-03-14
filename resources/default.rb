@@ -39,6 +39,8 @@ attribute :frontend_repo, :kind_of => String, :default => "http://www.public-sof
 attribute :frontend_version, :kind_of => String, :default => "v2.1.3"
 attribute :webmcp_version, :kind_of => String, :default =>  "v1.2.5"
 
+attribute :lighttp_alias, :kind_of => Boolean, :default =>  true
+
 attribute :db_user, :kind_of => String
 attribute :db_name, :kind_of => String
 attribute :db_password, :kind_of => String

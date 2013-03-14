@@ -41,7 +41,9 @@ liquid_feedback node['lf']['organisation'] do
     frontend_repo node['lf']['frontend_repo']
     frontend_version node['lf']['frontend_version']
     webmcp_version node['lf']['webcmp_version']
-    
+
+    lighttp_alias node['lf']['lighttp_alias']
+
     db_user node['lf']['db_user']
     db_name node['lf']['db_name']
     db_password node['lf']['db_password']

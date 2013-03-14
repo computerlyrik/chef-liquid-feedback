@@ -202,12 +202,17 @@ action :create do
     recursive true
   end
 
+prefix = ""
+if new_resource.lighttp_alias
+  prefix = "#{new_resource.organisation}/"
+end
+
   template "#{lf_dir}/liquid_feedback_frontend/config/myconfig.lua" do
     mode 0644
     variables ({:db_user => db_user,
                 :db_name => db_name,
                 :db_password => db_password,
-                :organisation  => new_resource.organisation,
+                :prefix  => prefix,
                 :lf_dir  => lf_dir,
                 :email => new_resource.email,
                 :public_access => new_resource.public_access})
@@ -253,7 +258,7 @@ action :create do
   template "/etc/lighttpd/conf-available/61-liquidfeedback-#{@new_resource.organisation}.conf" do
     variables ({
       :lf_dir  => lf_dir,
-      :organisation => new_resource.organisation})
+      :prefix => prefix})
     source "61-liquidfeedback.conf.erb"
     mode 0644
     notifies :restart, resources(:service => "lighttpd")
