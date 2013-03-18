@@ -1,9 +1,9 @@
-alias.url += ( "/<%=@prefix%>fastpath/" => "<%= @lf_dir %>/liquid_feedback_frontend/fastpath/",
-               "/<%=@prefix%>static"    => "<%= @lf_dir %>/liquid_feedback_frontend/static",
-               "/<%=@prefix%>"           => "<%= @lf_dir %>/webmcp/cgi-bin" )
+alias.url += ( "<%=@prefix%>/fastpath/" => "<%= @lf_dir %>/liquid_feedback_frontend/fastpath/",
+               "<%=@prefix%>/static"    => "<%= @lf_dir %>/liquid_feedback_frontend/static",
+               "<%=@prefix%>"           => "<%= @lf_dir %>/webmcp/cgi-bin" )
 
 # Configure environment for demo application
-$HTTP["url"] =~ "^/<%=@prefix%>" {
+$HTTP["url"] =~ "^<%=@prefix%>" {
   setenv.add-environment += (
     "LANG" => "en_US.UTF-8",
     "WEBMCP_APP_BASEPATH" => "<%= @lf_dir %>/liquid_feedback_frontend/",
@@ -13,15 +13,15 @@ $HTTP["url"] =~ "^/<%=@prefix%>" {
 # URL beautification
 url.rewrite-once += (
   # do not rewrite static URLs
-      "^/<%=@prefix%>fastpath/(.*)$" => "/<%=@prefix%>fastpath/$1",
-      "^/<%=@prefix%>static/(.*)$"   => "/<%=@prefix%>static/$1",
+      "^<%=@prefix%>/fastpath/(.*)$" => "<%=@prefix%>/fastpath/$1",
+      "^<%=@prefix%>/static/(.*)$"   => "<%=@prefix%>/static/$1",
 
   # dynamic URLs
-      "^/<%=@prefix%>([^\?]*)(\?(.*))?$" => "/<%=@prefix%>webmcp-wrapper.lua?_webmcp_path=$1&$3",
+      "^<%=@prefix%>/([^\?]*)(\?(.*))?$" => "<%=@prefix%>/webmcp-wrapper.lua?_webmcp_path=$1&$3",
 
 )
 
-$HTTP["url"] =~ "^/<%=@prefix%>fastpath/" {
+$HTTP["url"] =~ "^<%=@prefix%>/fastpath/" {
   cgi.assign = ( "" => "" )
   setenv.add-response-header = ( "Cache-Control" => "private; max-age=86400" )
 }

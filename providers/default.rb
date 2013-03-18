@@ -204,7 +204,7 @@ action :create do
 
 prefix = ""
 if new_resource.lighttp_alias
-  prefix = "#{new_resource.organisation}/"
+  prefix = "/#{new_resource.organisation}"
 end
 
   template "#{lf_dir}/liquid_feedback_frontend/config/myconfig.lua" do
