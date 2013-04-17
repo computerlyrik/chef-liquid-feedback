@@ -52,6 +52,9 @@ action :create do
     {:type => 'host', :db => 'all', :user => 'all', :addr => '127.0.0.1/32', :method => 'md5'},
     {:type => 'host', :db => 'all', :user => 'all', :addr => '::1/128', :method => 'md5'}
   ]
+
+#enforcing postgresql 9.1
+  node.set[:postgresql][:version] = "9.1"
   include_recipe "postgresql::server"
   include_recipe "database::postgresql"
 
