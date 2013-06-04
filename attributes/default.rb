@@ -5,7 +5,7 @@ default['lf']['organisation'] = "OurOrganisation"
 default['lf']['area'] =  "Default Area"
 
 default['lf']['email'] = "lf@#{node['domain']}"
-default['lf']['locale'] = "de_DE.UTF-8"
+default['lf']['locale'] = "en_US.UTF-8"
 
 default['lf']['member_ttl'] =  "1 year"
 default['lf']['contingent'] =  Hash.new
