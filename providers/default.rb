@@ -89,7 +89,7 @@ action :create do
   end
 
   execute "db_import" do
-    command "psql -v ON_ERROR_STOP=1 -f core.sql #{db_name} #{db_user}"
+    command "psql -v ON_ERROR_STOP=1 -f core.sql #{db_name} #{db_user} -h 127.0.0.1"
     cwd "#{lf_dir}/liquid_feedback_core"
     environment ({'PGPASSWORD' => db_password})
     action :nothing
@@ -119,7 +119,7 @@ action :create do
       INSERT INTO member (login, name, admin, invite_code) VALUES ('admin', 'Administrator', TRUE, '#{invite_code}');
     EOH
     action :nothing
-    subscribes :query, resources(:execute => 'db_import')
+    subscribes :query, resources(:postgresql_database => db_name), :immediately
   end
 
 
