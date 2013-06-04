@@ -36,10 +36,18 @@ action :create do
   directory lf_dir
   
   ######### Checkout core code
-  mercurial "#{lf_dir}/liquid_feedback_core" do
-    repository new_resource.core_repo
-    reference new_resource.core_version
-    action :sync
+  if @new_resource.core_repo_type == 'git'
+    git "#{lf_dir}/liquid_feedback_core" do
+      repository new_resource.core_repo
+      reference new_resource.core_version
+      action :sync
+    end
+  else
+    mercurial "#{lf_dir}/liquid_feedback_core" do
+      repository new_resource.core_repo
+      reference new_resource.core_version
+      action :sync
+    end
   end
 
   ########## Set up Postgre SQL Database
@@ -131,7 +139,7 @@ action :create do
   ######## Install WebMCP: 
   ######### Checkout core code
   mercurial "#{lf_dir}/webmcp-install" do
-    repository "http://www.public-software-group.org/mercurial/webmcp"
+    repository new_resource.webmcp_repo
     reference new_resource.webmcp_version
     action :sync
   end
@@ -175,10 +183,18 @@ action :create do
 
 
   ######### Checkout Frontend code
-  mercurial "#{lf_dir}/liquid_feedback_frontend" do
-    repository new_resource.frontend_repo
-    reference new_resource.frontend_version
-    action :sync
+  if @new_resource.core_repo_type == 'git'
+    git "#{lf_dir}/liquid_feedback_frontend" do
+      repository new_resource.frontend_repo
+      reference new_resource.frontend_version
+      action :sync
+    end
+  else
+    mercurial "#{lf_dir}/liquid_feedback_frontend" do
+      repository new_resource.frontend_repo
+      reference new_resource.frontend_version
+      action :sync
+    end
   end
 
   execute "compile_locales" do

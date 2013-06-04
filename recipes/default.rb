@@ -36,10 +36,13 @@ liquid_feedback node['lf']['organisation'] do
     # software related attributes
 
     basedir node['lf']['basedir']
+    core_repo_type node['lf']['core_repo_type']
     core_repo node['lf']['core_repo']
     core_version node['lf']['core_version']
+    frontend_repo_type node['lf']['frontend_repo_type']
     frontend_repo node['lf']['frontend_repo']
     frontend_version node['lf']['frontend_version']
+    webmcp_repo node['lf']['webcmp_repo']
     webmcp_version node['lf']['webcmp_version']
 
     lighttp_alias node['lf']['lighttp_alias']
