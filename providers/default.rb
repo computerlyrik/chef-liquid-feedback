@@ -189,8 +189,8 @@ action :create do
 
       'PWD' => "#{lf_dir}/liquid_feedback_frontend/locale",
       'HOME' => "/root",
-      'LC_ALL' => new_resource.locale,
-      'LANG' => new_resource.locale
+      'LC_ALL' => "en_US.UTF-8",
+      'LANG' => "en_US.UTF-8"
     })
   end
 
