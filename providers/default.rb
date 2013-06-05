@@ -36,10 +36,18 @@ action :create do
   directory lf_dir
   
   ######### Checkout core code
-  mercurial "#{lf_dir}/liquid_feedback_core" do
-    repository new_resource.core_repo
-    reference new_resource.core_version
-    action :sync
+  if @new_resource.core_repo_type == 'git'
+    git "#{lf_dir}/liquid_feedback_core" do
+      repository new_resource.core_repo
+      reference new_resource.core_version
+      action :sync
+    end
+  else
+    mercurial "#{lf_dir}/liquid_feedback_core" do
+      repository new_resource.core_repo
+      reference new_resource.core_version
+      action :sync
+    end
   end
 
   ########## Set up Postgre SQL Database
@@ -81,7 +89,7 @@ action :create do
   end
 
   execute "db_import" do
-    command "psql -v ON_ERROR_STOP=1 -f core.sql #{db_name} #{db_user}"
+    command "psql -v ON_ERROR_STOP=1 -f core.sql #{db_name} #{db_user} -h 127.0.0.1"
     cwd "#{lf_dir}/liquid_feedback_core"
     environment ({'PGPASSWORD' => db_password})
     action :nothing
@@ -111,7 +119,7 @@ action :create do
       INSERT INTO member (login, name, admin, invite_code) VALUES ('admin', 'Administrator', TRUE, '#{invite_code}');
     EOH
     action :nothing
-    subscribes :query, resources(:execute => 'db_import')
+    subscribes :query, resources(:postgresql_database => db_name), :immediately
   end
 
 
@@ -131,7 +139,7 @@ action :create do
   ######## Install WebMCP: 
   ######### Checkout core code
   mercurial "#{lf_dir}/webmcp-install" do
-    repository "http://www.public-software-group.org/mercurial/webmcp"
+    repository new_resource.webmcp_repo
     reference new_resource.webmcp_version
     action :sync
   end
@@ -175,10 +183,18 @@ action :create do
 
 
   ######### Checkout Frontend code
-  mercurial "#{lf_dir}/liquid_feedback_frontend" do
-    repository new_resource.frontend_repo
-    reference new_resource.frontend_version
-    action :sync
+  if @new_resource.core_repo_type == 'git'
+    git "#{lf_dir}/liquid_feedback_frontend" do
+      repository new_resource.frontend_repo
+      reference new_resource.frontend_version
+      action :sync
+    end
+  else
+    mercurial "#{lf_dir}/liquid_feedback_frontend" do
+      repository new_resource.frontend_repo
+      reference new_resource.frontend_version
+      action :sync
+    end
   end
 
   execute "compile_locales" do
@@ -189,8 +205,8 @@ action :create do
 
       'PWD' => "#{lf_dir}/liquid_feedback_frontend/locale",
       'HOME' => "/root",
-      'LC_ALL' => new_resource.locale,
-      'LANG' => new_resource.locale
+      'LC_ALL' => "en_US.UTF-8",
+      'LANG' => "en_US.UTF-8"
     })
   end
 
@@ -225,11 +241,12 @@ end
   ######## Setup Update service
   execute 'make lf_update' do
     cwd "#{lf_dir}/liquid_feedback_core"
-    command "make lf_update"
+    command "make"
   end
 
   template "#{lf_dir}/liquid_feedback_core/lf_updated" do
     variables ({:db_user => db_user,
+                :db_password => db_password,
                 :lf_dir  => lf_dir,
                 :db_name => db_name})
     mode 0755

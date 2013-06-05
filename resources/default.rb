@@ -33,10 +33,13 @@ attribute :contingent ,:kind_of => Hash
 attribute :public_access ,:kind_of => String, :default => "none"
 
 attribute :basedir, :kind_of => String, :default =>  "/opt"
+attribute :core_repo_type, :kind_of => String, :default => "mercurial"
 attribute :core_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_core"
 attribute :core_version, :kind_of => String, :default => "v2.1.0"
+attribute :frontend_repo_type, :kind_of => String, :default => "mercurial"
 attribute :frontend_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/liquid_feedback_frontend"
 attribute :frontend_version, :kind_of => String, :default => "v2.1.3"
+attribute :webmcp_repo, :kind_of => String, :default => "http://www.public-software-group.org/mercurial/webmcp"
 attribute :webmcp_version, :kind_of => String, :default =>  "v1.2.5"
 
 attribute :lighttp_alias, :kind_of => [TrueClass, FalseClass], :default =>  true
