@@ -241,7 +241,7 @@ end
   ######## Setup Update service
   execute 'make lf_update' do
     cwd "#{lf_dir}/liquid_feedback_core"
-    command "make lf_update"
+    command "make"
   end
 
   template "#{lf_dir}/liquid_feedback_core/lf_updated" do
