@@ -34,3 +34,5 @@ default['lf']['db_password']= nil
 default['lf']['sendmail'] = false
 #if lighttp should create aliases for different LqFb instances
 default['lf']['lighttp_alias'] = false
+#enable ssl
+default['lf']['https'] = false

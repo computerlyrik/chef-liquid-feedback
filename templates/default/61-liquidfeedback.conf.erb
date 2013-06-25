@@ -26,3 +26,8 @@ $HTTP["url"] =~ "^<%=@prefix%>/fastpath/" {
   setenv.add-response-header = ( "Cache-Control" => "private; max-age=86400" )
 }
 
+$HTTP["scheme"] == "http" {
+    $HTTP["host"] == "<%=node['fqdn']%>" {
+            url.redirect = ("^/<%=@prefix%>.*" => "https://<%=node['fqdn']%>$0")
+    }
+}
