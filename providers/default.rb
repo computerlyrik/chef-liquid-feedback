@@ -85,7 +85,7 @@ action :create do
     sql "CREATE LANGUAGE plpgsql"
     action :nothing
     ignore_failure true
-    subscribes :query, resources(:postgresql_database => db_name), :immediately
+    subscribes :query, "postgresql_database[db_name]", :immediately
   end
 
   execute "db_import" do
@@ -93,13 +93,13 @@ action :create do
     cwd "#{lf_dir}/liquid_feedback_core"
     environment ({'PGPASSWORD' => db_password})
     action :nothing
-    subscribes :run, resources(:postgresql_database => db_name), :immediately
+    subscribes :run, "postgresql_database[db_name]", :immediately
   end
   
   invite_code = secure_password
   template "#{lf_dir}/invitecode" do
     action :nothing
-    subscribes :create, resources(:execute => 'db_import')
+    subscribes :create, "execute[db_import]"
     variables ({:code => invite_code})
   end
 
@@ -119,7 +119,7 @@ action :create do
       INSERT INTO member (login, name, admin, invite_code) VALUES ('admin', 'Administrator', TRUE, '#{invite_code}');
     EOH
     action :nothing
-    subscribes :query, resources(:postgresql_database => db_name), :immediately
+    subscribes :query, "postgresql_database[db_name]", :immediately
   end
 
 
@@ -216,10 +216,10 @@ action :create do
     recursive true
   end
 
-prefix = ""
-if new_resource.lighttp_alias
-  prefix = "/#{new_resource.organisation}"
-end
+  prefix = ""
+  if new_resource.lighttp_alias
+    prefix = "/#{new_resource.organisation}"
+  end
 
   template "#{lf_dir}/liquid_feedback_frontend/config/myconfig.lua" do
     mode 0644
@@ -263,11 +263,11 @@ end
   service "lighttpd"
   
   template "/etc/lighttpd/conf-available/60-liquidfeedback-modules.conf" do
-    notifies :restart, resources(:service => "lighttpd")
+    notifies :restart, "service[lighttpd]"
   end
   link "/etc/lighttpd/conf-enabled/60-liquidfeedback-modules.conf" do 
     to "/etc/lighttpd/conf-available/60-liquidfeedback-modules.conf"
-    notifies :restart, resources(:service => "lighttpd")
+    notifies :restart, "service[lighttpd]")
   end
   
   template "/etc/lighttpd/conf-available/61-liquidfeedback-#{@new_resource.organisation}.conf" do
@@ -276,12 +276,12 @@ end
       :prefix => prefix})
     source "61-liquidfeedback.conf.erb"
     mode 0644
-    notifies :restart, resources(:service => "lighttpd")
+    notifies :restart, "service[lighttpd]"
   end
 
   link "/etc/lighttpd/conf-enabled/61-liquidfeedback-#{@new_resource.organisation}.conf" do 
     to "/etc/lighttpd/conf-available/61-liquidfeedback-#{new_resource.organisation}.conf"
-    notifies :restart, resources(:service => "lighttpd")
+    notifies :restart, "service[lighttpd]"
   end
 
   #TODO sending event notifications
@@ -302,7 +302,7 @@ action :disable do
   template "/etc/lighttpd/conf-enabled/61-liquidfeedback-#{@new_resource.organisation}.conf" do
     source "61-liquidfeedback.conf.erb"
     action :delete
-    notifies :restart, resources(:service => "lighttpd")
+    notifies :restart, "service[lighttpd]"
   end
   service "lf_updated_#{@new_resource.organisation}" do
     action [:stop, :disable]

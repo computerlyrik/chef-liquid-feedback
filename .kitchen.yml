@@ -1,0 +1,23 @@
+---
+driver_plugin: docker
+driver_config:
+  docker_path: lxc-docker
+
+platforms:
+- name: ubuntu-12.10
+  driver_config:
+    image: ubuntu:12.10
+    platform: ubuntu
+  run_list:
+
+- name: debian-6.0.7
+  driver_config:
+    image: tianon/debian:6.0.7
+    platform: debian
+  run_list:
+
+suites:
+- name: default
+  run_list:
+  - recipe[liquid-feedback]
+  attributes:
